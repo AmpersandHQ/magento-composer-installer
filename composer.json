@@ -1,17 +1,14 @@
 {
-    "name":"magento-hackathon/magento-composer-installer",
+    "name":"ampersand/magento-composer-installer",
     "description":"Composer installer for Magento modules",
     "keywords":[ "composer-installer", "magento"],
     "minimum-stability":"stable",
     "type":"composer-plugin",
     "license":"OSL-3.0",
-    "homepage":"https://github.com/Cotya/magento-composer-installer",
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://packages.firegento.com"
-        }
-    ],
+    "homepage":"https://github.com/AmpersandHQ/magento-composer-installer",
+    "replace": {
+        "magento-hackathon/magento-composer-installer": "3.0.0"
+    },
     "authors":[
         {
             "name":"Daniel Fahlke aka Flyingmana",
@@ -76,6 +73,9 @@
     },
     "test_version":"999.0.0",
     "extra":{
+        "branch-alias": {
+            "dev-master": "3.0-dev"
+        },
         "composer-command-registry": [ "MagentoHackathon\\Composer\\Magento\\Command\\DeployCommand" ],
         "class":"MagentoHackathon\\Composer\\Magento\\Plugin"
     }
