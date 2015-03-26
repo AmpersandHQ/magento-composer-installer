@@ -86,7 +86,7 @@ echo "Create dir $subDestPath\n";
                     mkdir($subDestPath, 0777, true);
                 }
             } else {
-echo "Link $item to $subDstPath\n";
+echo "Link $item to $subDestPath\n";
                 link($item, $subDestPath);
                 $this->addDeployedFile($subDestPath);
             }
