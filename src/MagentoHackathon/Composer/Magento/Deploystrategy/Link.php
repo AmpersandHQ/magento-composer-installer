@@ -98,7 +98,7 @@ class Link extends DeploystrategyAbstract
             } else {
                 if ($checkExists && file_exists($subDestPath)) {
                     if ($this->isForced()) {
-                        unlink($destPath);
+                        unlink($subDestPath);
                     } else {
                         throw new \ErrorException("Target $subDestPath already exists (set extra.magento-force to override)");
                     }
