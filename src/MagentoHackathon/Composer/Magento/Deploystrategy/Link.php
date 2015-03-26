@@ -34,7 +34,7 @@ class Link extends DeploystrategyAbstract
         // e.g. Namespace_Module.csv => app/locale/de_DE/
         if (file_exists($destPath) && is_dir($destPath)) {
             if (is_dir($sourcePath)) {
-                $this->dirToDir($sourcePath, $destPath);
+                $this->dirToDir($sourcePath, $destPath, true);
                 return true;
             } elseif (basename($sourcePath) === basename($destPath)) {
                 // copy/link each child of $sourcePath into $destPath
@@ -79,12 +79,12 @@ class Link extends DeploystrategyAbstract
         }
         mkdir($destPath, 0777, true);
 
-        $this->dirToDir($sourcePath, $destPath);
+        $this->dirToDir($sourcePath, $destPath, false);
 
         return true;
     }
     
-    private function dirToDir($sourcePath, $destPath)
+    private function dirToDir($sourcePath, $destPath, $checkExists)
     {
         $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($sourcePath),
             \RecursiveIteratorIterator::SELF_FIRST);
@@ -92,12 +92,17 @@ class Link extends DeploystrategyAbstract
         foreach ($iterator as $item) {
             $subDestPath = $destPath . '/' . $iterator->getSubPathName();
             if ($item->isDir()) {
-                if (! file_exists($subDestPath)) {
-                    echo "Create dir $subDestPath\n";
+                if (!file_exists($subDestPath)) {
                     mkdir($subDestPath, 0777, true);
                 }
             } else {
-                echo "Link $item to $subDestPath\n";
+                if ($checkExists && file_exists($subDestPath)) {
+                    if ($this->isForced()) {
+                        unlink($destPath);
+                    } else {
+                        throw new \ErrorException("Target $subDestPath already exists (set extra.magento-force to override)");
+                    }
+                }
                 link($item, $subDestPath);
                 $this->addDeployedFile($subDestPath);
             }
