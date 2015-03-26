@@ -33,7 +33,10 @@ class Link extends DeploystrategyAbstract
         // Handle source to dir link,
         // e.g. Namespace_Module.csv => app/locale/de_DE/
         if (file_exists($destPath) && is_dir($destPath)) {
-            if (basename($sourcePath) === basename($destPath)) {
+            if (is_dir($sourcePath)) {
+                $this->dirToDir($sourcePath, $destPath);
+                return true;
+            } elseif (basename($sourcePath) === basename($destPath)) {
                 // copy/link each child of $sourcePath into $destPath
                 foreach (new \DirectoryIterator($sourcePath) as $item) {
                     $item = (string) $item;
@@ -46,7 +49,6 @@ class Link extends DeploystrategyAbstract
                 return true;
             } else {
                 $destPath .= '/' . basename($source);
-echo "New destination: $destPath\n";
                 return $this->create($source, substr($destPath, strlen($this->getDestDir())+1));
             }
         }
@@ -72,10 +74,18 @@ echo "New destination: $destPath\n";
 
         // Copy dir to dir
         // First create destination folder if it doesn't exist
-        if (!file_exists($destPath)) {
-            mkdir($destPath, 0777, true);
+        if (file_exists($destPath)) {
+            $destPath .= '/' . basename($sourcePath);
         }
+        mkdir($destPath, 0777, true);
 
+        $this->dirToDir($sourcePath, $destPath);
+
+        return true;
+    }
+    
+    private function dirToDir($sourcePath, $destPath)
+    {
         $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($sourcePath),
             \RecursiveIteratorIterator::SELF_FIRST);
 
@@ -93,7 +103,5 @@ echo "New destination: $destPath\n";
                 throw new \ErrorException("Could not create $subDestPath");
             }
         }
-
-        return true;
     }
 }
