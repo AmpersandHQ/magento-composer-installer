@@ -33,7 +33,7 @@ class Link extends DeploystrategyAbstract
         // Handle source to dir link,
         // e.g. Namespace_Module.csv => app/locale/de_DE/
         if (file_exists($destPath) && is_dir($destPath)) {
-            if (is_dir($sourcePath) || basename($sourcePath) === basename($destPath)) {
+            if (basename($sourcePath) === basename($destPath)) {
                 // copy/link each child of $sourcePath into $destPath
                 foreach (new \DirectoryIterator($sourcePath) as $item) {
                     $item = (string) $item;
@@ -46,6 +46,7 @@ class Link extends DeploystrategyAbstract
                 return true;
             } else {
                 $destPath .= '/' . basename($source);
+echo "New destination: $destPath\n";
                 return $this->create($source, substr($destPath, strlen($this->getDestDir())+1));
             }
         }
@@ -82,11 +83,9 @@ class Link extends DeploystrategyAbstract
             $subDestPath = $destPath . '/' . $iterator->getSubPathName();
             if ($item->isDir()) {
                 if (! file_exists($subDestPath)) {
-echo "Create dir $subDestPath\n";
                     mkdir($subDestPath, 0777, true);
                 }
             } else {
-echo "Link $item to $subDestPath\n";
                 link($item, $subDestPath);
                 $this->addDeployedFile($subDestPath);
             }
