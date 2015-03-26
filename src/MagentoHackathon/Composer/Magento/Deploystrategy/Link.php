@@ -82,9 +82,11 @@ class Link extends DeploystrategyAbstract
             $subDestPath = $destPath . '/' . $iterator->getSubPathName();
             if ($item->isDir()) {
                 if (! file_exists($subDestPath)) {
+echo "Create dir $subDestPath\n";
                     mkdir($subDestPath, 0777, true);
                 }
             } else {
+echo "Link $item to $subDstPath\n";
                 link($item, $subDestPath);
                 $this->addDeployedFile($subDestPath);
             }
