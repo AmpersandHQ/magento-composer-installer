@@ -71,10 +71,9 @@ class Link extends DeploystrategyAbstract
 
         // Copy dir to dir
         // First create destination folder if it doesn't exist
-        if (file_exists($destPath)) {
-            $destPath .= '/' . basename($sourcePath);
+        if (!file_exists($destPath)) {
+            mkdir($destPath, 0777, true);
         }
-        mkdir($destPath, 0777, true);
 
         $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($sourcePath),
             \RecursiveIteratorIterator::SELF_FIRST);
