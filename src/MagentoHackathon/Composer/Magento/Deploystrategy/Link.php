@@ -33,7 +33,7 @@ class Link extends DeploystrategyAbstract
         // Handle source to dir link,
         // e.g. Namespace_Module.csv => app/locale/de_DE/
         if (file_exists($destPath) && is_dir($destPath)) {
-            if (basename($sourcePath) === basename($destPath)) {
+            if (is_dir($sourcePath) || basename($sourcePath) === basename($destPath)) {
                 // copy/link each child of $sourcePath into $destPath
                 foreach (new \DirectoryIterator($sourcePath) as $item) {
                     $item = (string) $item;
