@@ -91,7 +91,8 @@ class Link extends DeploystrategyAbstract
 
         foreach ($iterator as $item) {
             $subDestPath = $destPath . '/' . $iterator->getSubPathName();
-            if ($this->isDestinationIgnored($subDestPath)) {
+            $relativeDestPath = substr($subDestPath, strlen($this->getDestDir()));
+            if ($this->isDestinationIgnored($relativeDestPath)) {
                 continue;
             }
             if ($item->isDir()) {
