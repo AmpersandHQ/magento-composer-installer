@@ -35,8 +35,6 @@ class ProjectConfig
 
     const PATH_MAPPINGS_TRANSLATIONS_KEY = 'path-mapping-translations';
 
-    const DISABLE_CORE_INSTALLER = 'disable-core-installer';
-
     // Default Values
     const DEFAULT_MAGENTO_ROOT_DIR = 'root';
 
@@ -382,15 +380,5 @@ class ProjectConfig
         }
 
         return $arrayNew;
-    }
-
-    /**
-     * Whether or not the disable core installer flag has been passed
-     *
-     * @return bool
-     */
-    public function hasDisableCoreInstaller()
-    {
-        return $this->hasExtraField(self::DISABLE_CORE_INSTALLER);
     }
 }

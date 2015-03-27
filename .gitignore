@@ -2,3 +2,4 @@
 /composer.phar
 /vendor
 covarage-clover.xml
+/nbproject/private/
