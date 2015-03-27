@@ -272,7 +272,7 @@ abstract class DeploystrategyAbstract
      */
     protected function isDestinationIgnored($destination)
     {
-        $destination = '/' . $destination;
+        $destination = '/' . ltrim($destination, '/');
         $destination = str_replace('/./', '/', $destination);
         $destination = str_replace('//', '/', $destination);
         foreach ($this->ignoredMappings as $ignored) {
