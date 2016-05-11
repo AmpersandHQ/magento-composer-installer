@@ -8,7 +8,7 @@
 
 namespace MagentoHackathon\Composer\Magento;
 
-use Composer\Script\CommandEvent;
+use Composer\Script\Event;
 use MagentoHackathon\Composer\Magento\Event\EventManager;
 use MagentoHackathon\Composer\Magento\Event\PackageDeployEvent;
 use MagentoHackathon\Composer\Magento\Installer\MagentoInstallerAbstract;
@@ -174,9 +174,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * event listener is named this way, as it listens for events leading to changed code files
      *
-     * @param CommandEvent $event
+     * @param Event $event
      */
-    public function onNewCodeEvent(CommandEvent $event)
+    public function onNewCodeEvent(Event $event)
     {
         foreach ($this->deployManagers as $type => $deployManager) {
             $this->writeDebug(sprintf('start magento %s deploy via deployManager', $type));
