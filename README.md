@@ -6,7 +6,8 @@ Main Development now does happen at https://github.com/Cotya/magento-composer-in
 The Issues and PRs done here will not be forgotten.  
 If you correctly use this package via packages.firegento.com you have nothing to do.  
  
-
+####AmpersandHQ notes
+- This fork does not install composer packages with the type `magento-core`, it only supports `magento-module`.
 
 
 [![Build Status](https://travis-ci.org/magento-hackathon/magento-composer-installer.png)](https://travis-ci.org/magento-hackathon/magento-composer-installer)
