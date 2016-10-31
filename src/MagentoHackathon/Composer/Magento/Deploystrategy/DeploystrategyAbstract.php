@@ -398,6 +398,14 @@ abstract class DeploystrategyAbstract
      */
     public function remove($source, $dest)
     {
+        /*
+         * Do not remove a file if it is in the ignore list, by adding it to the ignore list the developer is taking
+         * responsibility for whether or not this file exists
+         */
+        if ($this->isDestinationIgnored($dest)) {
+            return;
+        }
+
         $sourcePath = $this->getSourceDir() . '/' . ltrim($this->removeTrailingSlash($source), '\\/');
         $destPath = $this->getDestDir() . '/' . ltrim($dest, '\\/');
 
